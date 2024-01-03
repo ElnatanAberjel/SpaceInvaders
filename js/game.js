@@ -17,6 +17,12 @@ var gGame
 // Called when game loads
 function init() {
 
+    const elStart = document.querySelector('.start')
+    elStart.style.display = 'none'
+
+    const elScore = document.querySelector('h2')
+    elScore.style.display = 'block'
+
     gGame = {
         isOn: true,
         isVictory: false,
@@ -54,7 +60,7 @@ function createBoard(size) {
 }
 
 function renderBoard(board) {
-    var strHTML = ''
+    var strHTML = '<table><tbody>'
     for (var i = 0; i < board.length; i++) {
 
         strHTML += '<tr>'
@@ -70,7 +76,8 @@ function renderBoard(board) {
         }
         strHTML += '</tr>'
     }
-    const elModal = document.querySelector('.board')
+    strHTML += '</tbody></table>'
+    const elModal = document.querySelector('.board-container')
     elModal.innerHTML = strHTML
 }
 // Returns a new cell object. e.g.: {type: SKY, gameObject: ALIEN}

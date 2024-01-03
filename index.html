@@ -8,14 +8,16 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 
-<body onload="init()" onkeydown="onKeyDown(event)">
+<body onkeydown="onKeyDown(event)">
 
     <h1>Space Invaders</h1>
-    <h2>score: <span class="score">0</span></h2>
-
-    <table>
-        <tbody class="board"></tbody>
-    </table>
+    <h2 style="display:none;">score: <span class="score">0</span></h2>
+    <div class="start">
+        <img class="startGame" src="img/start.gif">
+        <h3 class="gameH3">Let's Play Space Invaders</h3>
+        <button class="letsPlay" onclick="init()">Start</button>
+    </div>
+    <div class="board-container"></div>
     <div class="modal">
         <h3 class="msg"></h3>
         <button style="display:none;" class="restart=btn" onclick="init()">Play Again</button>
