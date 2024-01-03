@@ -7,12 +7,13 @@ const HERO = '🛸'
 const ALIEN = '👾'
 const LASER = '💧'
 const SKY = 'SKY'
+const EARTH = 'EARTH'
 
 
 // Matrix of cell objects. e.g.: {type: SKY, gameObject: ALIEN}
 var gBoard
-
 var gGame
+
 // Called when game loads
 function init() {
 
@@ -30,7 +31,9 @@ function init() {
     renderBoard(gBoard)
     renderScore()
     closeModal()
-    moveAliens()
+    gAliensTopRowIdx = 0
+    gAliensBottomRowIdx = ALIEN_ROW_COUNT - 1
+    moveAliens(shiftBoardRight)
 }
 // Create and returns the board with aliens on top, ground at bottom
 // use the functions: createCell, createHero, createAliens
@@ -44,7 +47,7 @@ function createBoard(size) {
     for (var i = 0; i < size; i++) {
         board[i] = []
         for (var j = 0; j < size; j++) {
-            board[i][j] = createCell()
+            board[i][j] = (i === size - 1) ? createCell(EARTH) : createCell()
         }
     }
     return board
@@ -58,10 +61,12 @@ function renderBoard(board) {
         for (var j = 0; j < board[0].length; j++) {
 
             const cell = board[i][j]
-            const className = `cell-${i}-${j}`
+            const className = cell.type
 
             strHTML += `<td class="${className}"
-            data-i='${i}' data-j='${j}'>${cell.gameObject || ''}</td>`
+                        data-i="${i}" data-j="${j}">`
+
+            strHTML += (cell.gameObject) ? `${cell.gameObject}</td>` : `</td>`
         }
         strHTML += '</tr>'
     }
@@ -70,12 +75,6 @@ function renderBoard(board) {
 }
 // Returns a new cell object. e.g.: {type: SKY, gameObject: ALIEN}
 
-function createCell(gameObject = null) {
-    return {
-        type: SKY,
-        gameObject: gameObject
-    }
-}
 // position such as: {i: 2, j: 7}
 function updateCell(pos, gameObject = null) {
     if (gHero.pos.j < 0) gHero.pos.j = gBoard[0].length - 1

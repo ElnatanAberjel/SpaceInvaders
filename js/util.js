@@ -1,9 +1,9 @@
 'use strict'
 
 // Returns a new cell object. e.g.: {type: SKY, gameObject: ALIEN}
-function createCell(gameObject = null) {
+function createCell(type = SKY, gameObject = null) {
     return {
-        type: SKY,
+        type: type,
         gameObject: gameObject
     }
 }

@@ -11,10 +11,11 @@ function createHero(board) {
         isShoot: false,
         score: 0
     }
-    board[gHero.pos.i][gHero.pos.j] = createCell(HERO)
+    board[gHero.pos.i][gHero.pos.j].gameObject = HERO
 }
 // Handle game keys
 function onKeyDown(ev) {
+    if (!gGame.isOn) return
     if (ev.key === 'ArrowRight') moveHero(1)
     if (ev.key === 'ArrowLeft') moveHero(-1)
     if (ev.key === ' ') shoot()
@@ -32,6 +33,7 @@ function moveHero(dir) {
 
 // Sets an interval for shutting (blinking) the laser up towards aliens
 function shoot() {
+    if (!gGame.isOn) return
     if (gHero.isShoot) return
     var laserPos = { i: gHero.pos.i - 1, j: gHero.pos.j }
     gIntervalLaser = setInterval(() => {
