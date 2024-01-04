@@ -12,7 +12,7 @@ var gAliensTopRowIdx
 var gAliensBottomRowIdx
 
 var gIsAlienFreeze = false
-var gIsAlienMovingRight  = false
+var gIsAlienMovingRight = false
 
 
 function createAliens(board) {
@@ -33,6 +33,7 @@ function handleAlienHit(pos) {
     if (isLastAlienInRow(gBoard)) gAliensBottomRowIdx--
     if (gGame.alienCount === 0) {
         gGame.isVictory = true
+        clearInterval(gIntervalAliens)
         gameOver()
     }
 }
@@ -40,24 +41,24 @@ function handleAlienHit(pos) {
 
 function shiftBoardRight(board, fromI, toI) {
     if (gIsAlienFreeze) return
-    gIsAlienMovingRight  = true
+    gIsAlienMovingRight = true
     for (var i = fromI; i <= toI; i++) {
         for (var j = board[0].length - 1; j >= 0; j--) {
 
-            var leftCellObject  = (j === 0) ? null : board[i][j - 1].gameObject
-            if (leftCellObject  === LASER) leftCellObject  = null
+            var leftCellObject = (j === 0) ? null : board[i][j - 1].gameObject
+            if (leftCellObject === LASER) leftCellObject = null
 
             if (board[i][j].gameObject === LASER) {
-                if (!leftCellObject ) continue
-                else if (leftCellObject  === ALIEN) {
-                    leftCellObject  = null
+                if (!leftCellObject) continue
+                else if (leftCellObject === ALIEN) {
+                    leftCellObject = null
                     handleAlienHit({ i, j })
                 }
             }
-            board[i][j].gameObject = leftCellObject 
+            board[i][j].gameObject = leftCellObject
 
-            var lastCellInRow  = gBoard[i][gBoard[i].length - 1]
-            if (lastCellInRow .gameObject === ALIEN) {
+            var lastCellInRow = gBoard[i][gBoard[i].length - 1]
+            if (lastCellInRow.gameObject === ALIEN) {
                 clearInterval(gIntervalAliens)
                 moveAliens(shiftBoardDown)
             }
@@ -68,7 +69,7 @@ function shiftBoardRight(board, fromI, toI) {
 function shiftBoardLeft(board, fromI, toI) {
     if (gIsAlienFreeze) return
 
-    gIsAlienMovingRight  = false
+    gIsAlienMovingRight = false
     for (var i = fromI; i <= toI; i++) {
         for (var j = 0; j < board[0].length; j++) {
             var rightCellGameObject = (j === board[0].length - 1) ? null : board[i][j + 1].gameObject
@@ -118,7 +119,7 @@ function shiftBoardDown(board, fromI, toI) {
     gAliensTopRowIdx++
     gAliensBottomRowIdx++
 
-    var funcName = gIsAlienMovingRight  ? shiftBoardLeft : shiftBoardRight
+    var funcName = gIsAlienMovingRight ? shiftBoardLeft : shiftBoardRight
     moveAliens(funcName)
 }
 

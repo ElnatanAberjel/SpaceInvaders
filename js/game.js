@@ -32,13 +32,13 @@ function init() {
     gBoard = createBoard(BOARD_SIZE)
     createHero(gBoard)
     gHero.score = 0
-    createAliens(gBoard)
     console.log(gBoard)
+    gAliensTopRowIdx = 0
+    gAliensBottomRowIdx = ALIEN_ROW_COUNT - 1
+    createAliens(gBoard)
     renderBoard(gBoard)
     renderScore()
     closeModal()
-    gAliensTopRowIdx = 0
-    gAliensBottomRowIdx = ALIEN_ROW_COUNT - 1
     moveAliens(shiftBoardRight)
 }
 // Create and returns the board with aliens on top, ground at bottom
